@@ -1,0 +1,22 @@
+server:
+  port: 8088
+  shutdown: graceful
+
+faaast:
+  core:
+    request-handler-thread-pool-size: 2
+  model:
+    path: './samples/demoAAS.json'
+    decoupled: true
+  endpoint:
+    http:
+      enabled: true
+      port: 8080
+    opcua:
+      enabled: true
+      tcp-port: 8081
+      seconds-till-shutdown: 1
+  assetconnection:
+    opcua:
+      enabled: true
+      host: 'opc.tcp://jw-Mac.local:53530/OPCUA/SimulationServer'

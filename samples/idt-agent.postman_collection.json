@@ -1,0 +1,88 @@
+{
+	"info": {
+		"_postman_id": "e7686ee6-035d-4b3a-95db-c379276e55b4",
+		"name": "idt-agent",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://localhost:8088/api/faaast/hello",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8088/api/hello",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8088",
+					"path": [
+						"api",
+						"hello"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8088/api/faaast",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8088/api/faaast",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8088",
+					"path": [
+						"api",
+						"faaast"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8088/api/faaast Copy",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8088/api/faaast",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8088",
+					"path": [
+						"api",
+						"faaast"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/submodels",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/submodels",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"submodels"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
