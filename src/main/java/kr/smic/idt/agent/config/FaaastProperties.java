@@ -1,5 +1,6 @@
 package kr.smic.idt.agent.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import lombok.Data;
@@ -56,12 +57,25 @@ public class FaaastProperties {
     public static class AssetConnectionProperties {
 
         private final OpcuaAssetConnectionProperties opcuaasset = new OpcuaAssetConnectionProperties();
-
+        private final HttpAssetConnectionProperties httpasset = new HttpAssetConnectionProperties();
+        private final MqttAssetConnectionProperties mqttasset = new MqttAssetConnectionProperties();
         @Data
         public static class OpcuaAssetConnectionProperties {
             private Boolean enabled = true;
+            private String host = "opc.tcp://localhost";
 
-            private String host = "opc.tcp://jw-Mac.local:53530/OPCUA/SimulationServer";
+        }
+
+        @Data
+        public static class HttpAssetConnectionProperties{
+            private Boolean enabled = false;
+            private String baseUrl = "http://localhost";
+        }
+
+        @Data
+        public static class MqttAssetConnectionProperties{
+            private Boolean enabled = false;
+            private String serverUri = "tcp://localhost";
         }
     }
 

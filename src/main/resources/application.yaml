@@ -17,6 +17,12 @@ faaast:
       tcp-port: 8081
       seconds-till-shutdown: 1
   assetconnection:
-    opcua:
+    opcuaasset:
       enabled: true
       host: 'opc.tcp://jw-Mac.local:53530/OPCUA/SimulationServer'
+#    httpasset:
+#      enabled: false
+#      baseUrl: 'http://localhost'
+#    mqttasset:
+#      enabled: false
+#      serverUri: 'tcp://localhost'

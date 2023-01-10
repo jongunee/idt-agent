@@ -1,8 +1,11 @@
 package kr.smic.idt.agent.config;
 
 import java.io.File;
+import java.net.MalformedURLException;
 
 import de.fraunhofer.iosb.ilt.faaast.service.assetconnection.AssetConnectionConfig;
+import de.fraunhofer.iosb.ilt.faaast.service.assetconnection.http.HttpAssetConnectionConfig;
+import de.fraunhofer.iosb.ilt.faaast.service.assetconnection.mqtt.MqttAssetConnectionConfig;
 import de.fraunhofer.iosb.ilt.faaast.service.assetconnection.opcua.OpcUaAssetConnectionConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +23,8 @@ import kr.smic.idt.agent.config.FaaastProperties.EndpointProperties.HttpEndpoint
 import kr.smic.idt.agent.config.FaaastProperties.EndpointProperties.OpcuaEndpointProperties;
 import kr.smic.idt.agent.config.FaaastProperties.ModelProperties;
 import kr.smic.idt.agent.config.FaaastProperties.AssetConnectionProperties.OpcuaAssetConnectionProperties;
+import kr.smic.idt.agent.config.FaaastProperties.AssetConnectionProperties.HttpAssetConnectionProperties;
+import kr.smic.idt.agent.config.FaaastProperties.AssetConnectionProperties.MqttAssetConnectionProperties;
 
 @Configuration(proxyBeanMethods = false)
 @EnableConfigurationProperties(FaaastProperties.class)
@@ -35,12 +40,14 @@ public class FaaastConfiguration {
         LOGGER.info(properties.toString());
     }
 
-    public ServiceConfig getFaaastServiceConfig() {
+    public ServiceConfig getFaaastServiceConfig() throws MalformedURLException {
         CoreProperties core = properties.getCore();
         ModelProperties model = properties.getModel();
         HttpEndpointProperties httpEndpoint = properties.getEndpoint().getHttp();
         OpcuaEndpointProperties opcuaEndpoint = properties.getEndpoint().getOpcua();
         OpcuaAssetConnectionProperties opcuaAssetConnection = properties.getAssetconnection().getOpcuaasset();
+        HttpAssetConnectionProperties httpAssetConnection = properties.getAssetconnection().getHttpasset();
+        MqttAssetConnectionProperties mqttAssetConnection = properties.getAssetconnection().getMqttasset();
 
         return new ServiceConfig.Builder()
                 .core(new CoreConfig.Builder()
@@ -65,6 +72,14 @@ public class FaaastConfiguration {
                         .host(opcuaAssetConnection.getHost())
                         .build()
                 )
+                .assetConnection(new HttpAssetConnectionConfig.Builder()
+                        .baseUrl(httpAssetConnection.getBaseUrl())
+                        .build()
+                )
+                .assetConnection(new MqttAssetConnectionConfig.Builder()
+                        .serverUri(mqttAssetConnection.getServerUri())
+                        .build()
+                )
                 .messageBus(new MessageBusInternalConfig())
                 .build();
     }
@@ -74,7 +89,7 @@ public class FaaastConfiguration {
                 .core(new CoreConfig.Builder().requestHandlerThreadPoolSize(2).build())
                 .persistence(new PersistenceInMemoryConfig())
                 .endpoint(new HttpEndpointConfig())
-                .assetConnection(new AssetConnectionConfig())
+                .assetConnection(new OpcUaAssetConnectionConfig())
                 .messageBus(new MessageBusInternalConfig())
                 .build(); 
     }

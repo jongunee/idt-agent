@@ -3,6 +3,7 @@ package kr.smic.idt.agent;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
+import de.fraunhofer.iosb.ilt.faaast.service.exception.ConfigurationInitializationException;
 import org.springframework.stereotype.Component;
 
 import de.fraunhofer.iosb.ilt.faaast.service.Service;
@@ -11,6 +12,8 @@ import de.fraunhofer.iosb.ilt.faaast.service.exception.ConfigurationException;
 import de.fraunhofer.iosb.ilt.faaast.service.exception.EndpointException;
 import de.fraunhofer.iosb.ilt.faaast.service.exception.MessageBusException;
 import kr.smic.idt.agent.config.FaaastConfiguration;
+
+import java.net.MalformedURLException;
 
 @Component
 public class FaaastService {
@@ -26,7 +29,7 @@ public class FaaastService {
 	}
 
 	@PostConstruct
-	public void init() throws ConfigurationException, AssetConnectionException {
+	public void init() throws ConfigurationException, AssetConnectionException, MalformedURLException {
 		this.faaastService = new Service(config.getFaaastServiceConfig());
 	}
 
