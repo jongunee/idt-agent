@@ -1,6 +1,5 @@
 package kr.smic.idt.agent;
 
-import org.eclipse.paho.client.mqttv3.MqttException;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,7 +10,6 @@ import de.fraunhofer.iosb.ilt.faaast.service.exception.EndpointException;
 import de.fraunhofer.iosb.ilt.faaast.service.exception.MessageBusException;
 import reactor.core.publisher.Mono;
 
-import java.net.ConnectException;
 import java.net.MalformedURLException;
 
 @RestController
