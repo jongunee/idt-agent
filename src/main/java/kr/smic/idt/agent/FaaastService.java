@@ -4,6 +4,7 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
 import de.fraunhofer.iosb.ilt.faaast.service.exception.ConfigurationInitializationException;
+import org.springframework.beans.factory.BeanCreationException;
 import org.springframework.stereotype.Component;
 
 import de.fraunhofer.iosb.ilt.faaast.service.Service;

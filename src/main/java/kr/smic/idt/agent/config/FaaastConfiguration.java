@@ -49,7 +49,12 @@ public class FaaastConfiguration {
         HttpAssetConnectionProperties httpAssetConnection = properties.getAssetconnection().getHttpasset();
         MqttAssetConnectionProperties mqttAssetConnection = properties.getAssetconnection().getMqttasset();
 
-        return new ServiceConfig.Builder()
+        boolean isOpcuaAssetEnabled = properties.getAssetconnection().getOpcuaasset().getEnabled();
+        boolean isHttpAssetEnabled = properties.getAssetconnection().getHttpasset().getEnabled();
+        boolean isMqttAssetEnabled = properties.getAssetconnection().getMqttasset().getEnabled();
+
+
+        ServiceConfig.Builder builder = new ServiceConfig.Builder()
                 .core(new CoreConfig.Builder()
                         .requestHandlerThreadPoolSize(core.getRequestHandlerThreadPoolSize())
                         .build()
@@ -68,20 +73,27 @@ public class FaaastConfiguration {
                         .secondsTillShutdown(opcuaEndpoint.getSecondsTillShutdown())
                         .build()
                 )
-                .assetConnection(new OpcUaAssetConnectionConfig.Builder()
-                        .host(opcuaAssetConnection.getHost())
-                        .build()
-                )
-                .assetConnection(new HttpAssetConnectionConfig.Builder()
-                        .baseUrl(httpAssetConnection.getBaseUrl())
-                        .build()
-                )
-                .assetConnection(new MqttAssetConnectionConfig.Builder()
-                        .serverUri(mqttAssetConnection.getServerUri())
-                        .build()
-                )
-                .messageBus(new MessageBusInternalConfig())
-                .build();
+                .messageBus(new MessageBusInternalConfig());
+
+        if (isOpcuaAssetEnabled) {
+            builder.assetConnection(new OpcUaAssetConnectionConfig.Builder()
+                    .host(opcuaAssetConnection.getHost())
+                    .build()
+            );
+        }
+        if (isHttpAssetEnabled) {
+            builder.assetConnection(new HttpAssetConnectionConfig.Builder()
+                    .baseUrl(httpAssetConnection.getBaseUrl())
+                    .build()
+            );
+        }
+        if (isMqttAssetEnabled) {
+            builder.assetConnection(new MqttAssetConnectionConfig.Builder()
+                    .serverUri(mqttAssetConnection.getServerUri())
+                    .build()
+            );
+        }
+        return builder.build();
     }
 
     public ServiceConfig getDefaultFaaastServiceConfig() {
@@ -89,7 +101,6 @@ public class FaaastConfiguration {
                 .core(new CoreConfig.Builder().requestHandlerThreadPoolSize(2).build())
                 .persistence(new PersistenceInMemoryConfig())
                 .endpoint(new HttpEndpointConfig())
-                .assetConnection(new OpcUaAssetConnectionConfig())
                 .messageBus(new MessageBusInternalConfig())
                 .build(); 
     }
